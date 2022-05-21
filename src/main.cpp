@@ -5,16 +5,22 @@
 #include <WiFiUdp.h>
 #include <ArduinoOTA.h>
 
-const char* ssid = "Uncle Nate";
-const char* password = "Is Alright I Guess";
+const char* ssid = "No Pineapple";
+const char* password = "7 Salutations";
 
-Adafruit_NeoPixel strip0(10, 15, NEO_GRB + NEO_KHZ800);
-Adafruit_NeoPixel strip1(10, 0, NEO_GRB + NEO_KHZ800);
-Adafruit_NeoPixel strip2(10, 16, NEO_GRB + NEO_KHZ800);
-Adafruit_NeoPixel strip3(10, 5, NEO_GRB + NEO_KHZ800);
-#define DELAYVAL 500
+#define STRIP_LEN 30
+Adafruit_NeoPixel strip0(STRIP_LEN, 15, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel strip1(STRIP_LEN, 0, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel strip2(STRIP_LEN, 16, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel strip3(STRIP_LEN, 5, NEO_GRB + NEO_KHZ800);
+#define DELAYVAL 50
 
 int64_t last_active_time = 0;
+
+int rand_rgb()
+{
+  return rand() / (RAND_MAX / 255);
+}
 
 void setup() {
     strip0.begin();
@@ -79,12 +85,13 @@ void loop() {
         strip1.clear();
         strip2.clear();
         strip3.clear();
-        for (size_t i = 0; i < 10; i++)
+        for (size_t i = 0; i < STRIP_LEN; i++)
         {
-            strip0.setPixelColor(i, strip0.Color(150, 150, 230));
-            strip1.setPixelColor(i, strip1.Color(150, 150, 230));
-            strip2.setPixelColor(i, strip2.Color(150, 150, 230));
-            strip3.setPixelColor(i, strip3.Color(150, 150, 230));
+          rand();
+            strip0.setPixelColor(i, strip0.Color(rand_rgb(), rand_rgb(), rand_rgb()));
+            strip1.setPixelColor(i, strip1.Color(rand_rgb(), rand_rgb(), rand_rgb()));
+            strip2.setPixelColor(i, strip2.Color(rand_rgb(), rand_rgb(), rand_rgb()));
+            strip3.setPixelColor(i, strip3.Color(rand_rgb(), rand_rgb(), rand_rgb()));
 
             strip0.show();
             strip1.show();
